@@ -4,7 +4,7 @@ Validation Helper for form in Mobx
 ## Installation
 
 ```bash
-npm i mobx-form-validate --save
+npm install https://github.com/PizzaLiu/mobx-form-validate.git\#npm --save
 ```
 
 ## API
@@ -20,6 +20,9 @@ which should be undefined when validation successed, or be a string which indica
 This will also add a computed field named 'validateError', which indicate any error occuered in this form.
 
 This will also add a computed field named 'isValid', whether this form has no validation error.
+
+### @validate(regexpArr, messageArr)
+
 
 ## Usage
 
@@ -203,4 +206,12 @@ class MainForm {
     this.itemList.clear();
   }
 }
+```
+
+### Array of req & msg
+
+```js
+@observable
+@validate([/^.+$/, /^[abc]+$/, /^[abc]{3}$/], ['请输入密码', '只能有abc', '必须是3位字符'])
+password = '';
 ```
