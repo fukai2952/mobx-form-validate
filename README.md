@@ -211,7 +211,16 @@ class MainForm {
 ### Array of req & msg
 
 ```js
+// 正则表达式 -> 字符串
 @observable
 @validate([/^.+$/, /^[abc]+$/, /^[abc]{3}$/], ['请输入密码', '只能有abc', '必须是3位字符'])
 password = '';
+
+// 正则+function -> 字符串
+// function 返回 undefined 或者 false 表示认证通过，否则返回提示字符串
+@observable
+@validate([/^.+$/, (value) => {return value == 'pizza' ? undefined : 'i want pizza';}], ['请输入用户名或手机号', ''])
+userName = '';
 ```
+
+
