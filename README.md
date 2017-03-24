@@ -210,17 +210,33 @@ class MainForm {
 
 ### Array of req & msg
 
+一般用法：
+
 ```js
-// 正则表达式 -> 字符串
 @observable
 @validate([/^.+$/, /^[abc]+$/, /^[abc]{3}$/], ['请输入密码', '只能有abc', '必须是3位字符'])
 password = '';
+```
 
-// 正则+function -> 字符串
-// function 返回 undefined 或者 false 表示认证通过，否则返回提示字符串
+req 数组中带有 function 的用法：
+
+用法1：function 在 req 数组中间（非最后一个），则返回 `true`/`false`，
+错误提示为 msg 数组中对应的字符串。
+
+```js
 @observable
-@validate([/^.+$/, (value) => {return value == 'pizza' ? undefined : 'i want pizza';}], ['请输入用户名或手机号', ''])
+  @validate([/^.+$/, (value) => {return value.indexOf('pizza') !== -1 ? true : false;}, /.{6,}/], ['请输入用户名或手机号', '必须包含字符串 pizza', '必须大于6位'])
 userName = '';
 ```
 
+用法2: function 为 req 数组中最后一个，则返回 `undifined` 表示通过验证，
+返回字符串则表示验证不通过，且作为错误提示。`此用法可用于不同情况返回不同提示的应用场景`
+
+```js
+@observable
+@validate([/^.+$/, (value) => {return value == 'pizza' ? undefined : 请输入 pizza';}], ['请输入用户名或手机号'])
+userName = '';
+```
+
+> 如果是判断逻辑很复杂的情况，建议使用单个 function 解决，使用方法为 `@validate(func)` , `func` 为一个验证方法，返回`undefined`表示验证通过，否则返回提示字符串。
 
