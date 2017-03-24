@@ -234,7 +234,7 @@ userName = '';
 
 ```js
 @observable
-@validate([/^.+$/, (value) => {return value == 'pizza' ? undefined : 请输入 pizza';}], ['请输入用户名或手机号'])
+@validate([/^.+$/, (value) => {return value == 'pizza' ? undefined : '请输入 pizza';}], ['请输入用户名或手机号'])
 userName = '';
 ```
 
