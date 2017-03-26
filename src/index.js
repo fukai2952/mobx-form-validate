@@ -30,7 +30,7 @@ function validateFunc(reg, msg) {
   }
 
   return reg.test
-    ? (value ? undefined : (value=>reg.test(value)?undefined:(msg||errMsg)))
+    ? (value=>value ? undefined : (reg.test(value)?undefined:(msg||errMsg)))
     : reg;
 }
 
