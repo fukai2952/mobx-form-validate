@@ -210,7 +210,7 @@ class MainForm {
 
 ### Array of req & msg
 
-一般用法：
+#### 一般用法：
 
 ```js
 @observable
@@ -218,7 +218,7 @@ class MainForm {
 password = '';
 ```
 
-req 数组中带有 function 的用法：
+#### req 数组中带有 function 的用法：
 
 用法1：function 在 req 数组中间（非最后一个），则返回 `true`/`false`，
 错误提示为 msg 数组中对应的字符串。
@@ -240,3 +240,13 @@ userName = '';
 
 > 如果是判断逻辑很复杂的情况，建议使用单个 function 解决，使用方法为 `@validate(func)` , `func` 为一个验证方法，返回`undefined`表示验证通过，否则返回提示字符串。
 
+
+#### 特殊用法：
+
+有时我们的项目中表单是根据业务逻辑来显示或隐藏元素的，只有在表单元素显示的情况下才会做出验证(如：登录时，只用用户输入错误了用户名或密码3次以上才出现图形验证码)，此时就可以先把表单元素对应的@observable属性为设置null，在表单显示元素显示时，再给他设置一个初始值（如this.verifyCode=''）即可
+
+```js
+@observable
+@validate([/^.+$/], ['请输入验证码'])
+verifyCode = null;
+```

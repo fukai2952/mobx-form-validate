@@ -23,13 +23,14 @@ function validateFunc(reg, msg) {
       msg = msg[0];
     } else {
       return function (value) {
+        if (value) return undefined;
         return (reg[0].test ? reg[0].test(value) : reg[0](value)) ? (validateFunc(reg.slice(1), msg.slice(1)))(value) : msg[0] || errMsg;
       };
     }
   }
 
   return reg.test
-    ? (value=>reg.test(value)?undefined:(msg||errMsg))
+    ? (value=>value ? undefined : (reg.test(value)?undefined:(msg||errMsg)))
     : reg;
 }
 
